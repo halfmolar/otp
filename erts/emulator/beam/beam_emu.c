@@ -913,6 +913,8 @@ extern int count_instructions;
 #define IsPort(Src, Fail) if (is_not_port(Src)) { Fail; }
 #define IsPid(Src, Fail) if (is_not_pid(Src)) { Fail; }
 #define IsRef(Src, Fail) if (is_not_ref(Src)) { Fail; }
+#define IsDomain(Src, Fail) if (is_not_domain(Src)) { Fail; }
+#define IsForward(Src, Fail) if (!domain_fwd(Src)) { Fail; }
 
 /*
  * process_main() is already huge, so we want to avoid inlining

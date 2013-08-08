@@ -365,6 +365,8 @@ erl_first_process_otp(char* modname, void* code, unsigned size, int argc, char**
     ErlSpawnOpts so;
     Eterm env;
     
+    parent.domain = 0;
+
     start_mod = erts_atom_put((byte *) modname, sys_strlen(modname), ERTS_ATOM_ENC_LATIN1, 1);
     if (erts_find_function(start_mod, am_start, 2,
 			   erts_active_code_ix()) == NULL) {

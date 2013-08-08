@@ -255,7 +255,9 @@ write(T, D) when is_tuple(T) ->
 	     [write(element(1, T), D-1)|
               write_tail(tl(tuple_to_list(T)), D-1, $,)],
 	     $}]
-    end.
+    end;
+write(Term, _D) -> write_domain(Term).
+
 
 %% write_tail(List, Depth, CharacterBeforeDots)
 %%  Test the terminating case first as this looks better with depth.
@@ -272,6 +274,9 @@ write_port(Port) ->
 
 write_ref(Ref) ->
     erlang:ref_to_list(Ref).
+
+write_domain(Ref) ->
+    erlang:domain_to_list(Ref).
 
 write_binary(B, D) when is_integer(D) ->
     [$<,$<,write_binary_body(B, D),$>,$>].

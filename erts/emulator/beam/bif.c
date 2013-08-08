@@ -5058,4 +5058,47 @@ BIF_RETTYPE dt_restore_tag_1(BIF_ALIST_1)
     BIF_RET(am_true);
 }
 
+BIF_RETTYPE get_domain_0(BIF_ALIST_0)
+{
+  BIF_RET(make_domain(BIF_P->domain, 0));
+}
 
+BIF_RETTYPE get_domain_1(BIF_ALIST_1)
+{
+   Process *rp;
+   int fwd;
+
+   if ((rp = erts_pid2proc(BIF_P, ERTS_PROC_LOCK_MAIN,
+			   BIF_ARG_1, ERTS_PROC_LOCK_MAIN)) == NULL) {
+       BIF_ERROR(BIF_P, BADARG);
+   }
+
+   if (rp->domain == BIF_P->domain) {
+     fwd = 0;
+   } else {
+     fwd = 1;
+   }
+   BIF_RET(make_domain(rp->domain, fwd));
+}
+
+BIF_RETTYPE set_domain_1(BIF_ALIST_1)
+{
+   Uint32 old_domain;
+   Sint new_domain;
+
+   if (is_not_small(BIF_ARG_1)) {
+     BIF_ERROR(BIF_P, BADARG);
+   }
+   
+   new_domain = signed_val(BIF_ARG_1);
+   old_domain = BIF_P->domain;
+   BIF_P->domain = new_domain;
+   BIF_RET(make_small(old_domain));
+}
+
+BIF_RETTYPE domain_to_list_1(BIF_ALIST_1)
+{
+    if (is_not_domain(BIF_ARG_1))
+	BIF_ERROR(BIF_P, BADARG);
+    BIF_RET(term2list_dsprintf(BIF_P, BIF_ARG_1));
+}

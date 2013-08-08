@@ -89,6 +89,7 @@
 -define(TYPE_IS_BIGNUM, bignum).
 -define(TYPE_IS_BINARY, binary).
 -define(TYPE_IS_FIXNUM, fixnum).
+-define(TYPE_IS_DOMAIN, domain).
 -define(TYPE_IS_FLOAT, float).
 -define(TYPE_IS_FUNCTION, function).
 -define(TYPE_IS_INTEGER, integer).
@@ -2051,6 +2052,7 @@ type_test(?PRIMOP_IS_ATOM) -> ?TYPE_IS_ATOM;
 type_test(?PRIMOP_IS_BIGNUM) -> ?TYPE_IS_BIGNUM;
 type_test(?PRIMOP_IS_BINARY) -> ?TYPE_IS_BINARY;
 type_test(?PRIMOP_IS_FIXNUM) -> ?TYPE_IS_FIXNUM;
+type_test(?PRIMOP_IS_DOMAIN) -> ?TYPE_IS_DOMAIN;
 type_test(?PRIMOP_IS_FLOAT) -> ?TYPE_IS_FLOAT;
 type_test(?PRIMOP_IS_FUNCTION) -> ?TYPE_IS_FUNCTION;
 type_test(?PRIMOP_IS_INTEGER) -> ?TYPE_IS_INTEGER;
@@ -2082,6 +2084,7 @@ is_type_test(?PRIMOP_IS_BIGNUM, 1) -> true;
 is_type_test(?PRIMOP_IS_BINARY, 1) -> true;
 is_type_test(?PRIMOP_IS_FIXNUM, 1) -> true;
 is_type_test(?PRIMOP_IS_FLOAT, 1) -> true;
+is_type_test(?PRIMOP_IS_DOMAIN, 1) -> true;
 is_type_test(?PRIMOP_IS_FUNCTION, 1) -> true;
 is_type_test(?PRIMOP_IS_INTEGER, 1) -> true;
 is_type_test(?PRIMOP_IS_LIST, 1) -> true;

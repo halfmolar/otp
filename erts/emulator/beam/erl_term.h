@@ -93,7 +93,13 @@ struct erl_node_; /* Declared in erl_node_tables.h */
 #define _TAG_IMMED2_MASK	0x3F
 #define _TAG_IMMED2_ATOM	((0x0 << _TAG_IMMED1_SIZE) | _TAG_IMMED1_IMMED2)
 #define _TAG_IMMED2_CATCH	((0x1 << _TAG_IMMED1_SIZE) | _TAG_IMMED1_IMMED2)
+#define _TAG_IMMED2_IMMED3      ((0x2 << _TAG_IMMED1_SIZE) | _TAG_IMMED1_IMMED2)
 #define _TAG_IMMED2_NIL		((0x3 << _TAG_IMMED1_SIZE) | _TAG_IMMED1_IMMED2)
+
+#define _TAG_IMMED3_SIZE	8
+#define _TAG_IMMED3_MASK	0xFF
+#define _TAG_IMMED3_DOMAIN	((0x0 << _TAG_IMMED2_SIZE) | _TAG_IMMED2_IMMED3)
+/* There is space for some more immediate types. */
 
 /*
  * HEADER representation:
@@ -426,6 +432,17 @@ _ET_DECLARE_CHECKED(Eterm*,big_val,Wterm)
 #define _unchecked_float_val(x)	_unchecked_boxed_val((x))
 _ET_DECLARE_CHECKED(Eterm*,float_val,Wterm)
 #define float_val(x)	_ET_APPLY(float_val,(x))
+
+/* domain access methods */
+#define make_domain(x, y)  ((Eterm)(((((x) << 1) + (y) ) << _TAG_IMMED3_SIZE) + _TAG_IMMED3_DOMAIN))
+#define is_domain(x)	(((x) & _TAG_IMMED3_MASK) == _TAG_IMMED3_DOMAIN)
+#define is_not_domain(x)	(!is_domain(x))
+#define _unchecked_domain_val(x)	((x) >> (_TAG_IMMED3_SIZE + 1))
+_ET_DECLARE_CHECKED(Uint,domain_val,Eterm)
+#define domain_val(x)	_ET_APPLY(domain_val,(x))
+#define _unchecked_domain_fwd(x)	(((x) >> _TAG_IMMED3_SIZE ) & 1)
+_ET_DECLARE_CHECKED(Uint,domain_fwd,Eterm)
+#define domain_fwd(x)	_ET_APPLY(domain_fwd,(x))
 
 /* Float definition for byte and word access */
 typedef double ieee754_8;
@@ -1070,6 +1087,7 @@ _ET_DECLARE_CHECKED(Uint,y_reg_index,Uint)
  * - not_eq_tags() and NUMBER_CODE() defined in terms
  *   of the tag_val_def() function
  */
+#define _DEF_TAG_SIZE            5
 
 #define BINARY_DEF		0x0
 #define LIST_DEF		0x1
@@ -1087,6 +1105,7 @@ _ET_DECLARE_CHECKED(Uint,y_reg_index,Uint)
 #define FLOAT_DEF		0xd
 #define BIG_DEF			0xe
 #define SMALL_DEF		0xf
+#define DOMAIN_DEF              0x10
 
 #if ET_DEBUG
 extern unsigned tag_val_def_debug(Wterm, const char*, unsigned);
@@ -1096,8 +1115,8 @@ extern unsigned tag_val_def(Wterm);
 #endif
 #define not_eq_tags(X,Y)	(tag_val_def((X)) ^ tag_val_def((Y)))
 
-#define NUMBER_CODE(x,y)	((tag_val_def(x) << 4) | tag_val_def(y))
-#define _NUMBER_CODE(TX,TY)	((TX << 4) | TY)
+#define NUMBER_CODE(x,y)	((tag_val_def(x) << _DEF_TAG_SIZE) | tag_val_def(y))
+#define _NUMBER_CODE(TX,TY)	((TX << _DEF_TAG_SIZE) | TY)
 #define SMALL_SMALL	_NUMBER_CODE(SMALL_DEF,SMALL_DEF)
 #define SMALL_BIG 	_NUMBER_CODE(SMALL_DEF,BIG_DEF)
 #define SMALL_FLOAT 	_NUMBER_CODE(SMALL_DEF,FLOAT_DEF)

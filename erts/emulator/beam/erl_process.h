@@ -835,6 +835,7 @@ struct process {
     Eterm parent;		/* Pid of process that created this process. */
     erts_approx_time_t approx_started; /* Time when started. */
 
+    Uint32 domain; /* Domain that owns the process */
     /* This is the place, where all fields that differs between memory
      * architectures, have gone to.
      */

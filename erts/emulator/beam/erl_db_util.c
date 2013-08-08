@@ -517,8 +517,20 @@ static DMCGuardBif guard_tab[] =
 	DBIF_ALL
     },
     {
+	am_is_domain,
+	&is_domain_1,
+	1,
+	DBIF_ALL
+    },
+    {
 	am_is_float,
 	&is_float_1,
+	1,
+	DBIF_ALL
+    },
+    {
+	am_is_forward,
+	&is_forward_1,
 	1,
 	DBIF_ALL
     },

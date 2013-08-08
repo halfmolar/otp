@@ -76,7 +76,7 @@
 		    t_is_bitstr/1,
 		    t_is_boolean/1,
 		    t_is_cons/1,
-		    t_is_float/1,
+		    t_is_domain/1,
 		    t_is_float/1,
 		    t_is_fun/1,
 		    t_is_integer/1,
@@ -109,6 +109,7 @@
 		    t_port/0,
 		    t_maybe_improper_list/0,
 		    t_reference/0,
+		    t_domain/0,
 		    t_string/0,
 		    t_subtract/2,
 		    t_sup/1,
@@ -588,6 +589,11 @@ type(erlang, is_boolean, 1, Xs) ->
 	    check_guard(X, fun (Y) -> t_is_boolean(Y) end, t_boolean())
 	end,
   strict(arg_types(erlang, is_boolean, 1), Xs, Fun);
+type(erlang, is_domain, 1, Xs) ->
+  Fun = fun (X) ->
+	    check_guard(X, fun (Y) -> t_is_domain(Y) end, t_domain())
+	end,
+  strict(arg_types(erlang, is_domain, 1), Xs, Fun);
 type(erlang, is_float, 1, Xs) ->
   Fun = fun (X) ->
 	    check_guard(X, fun (Y) -> t_is_float(Y) end, t_float())
@@ -2062,7 +2068,7 @@ type_ranks(Type, I, Min, Max, [TypeClass|Rest]) ->
 
 type_order() ->
   [t_number(), t_atom(), t_reference(), t_fun(), t_port(), t_pid(), t_tuple(),
-   t_list(), t_binary()].
+   t_list(), t_binary(), t_domain()].
 
 key_comparisons_fail(X0, KeyPos, TupleList) ->
   X = case t_is_number(t_inf(X0, t_number())) of
@@ -2203,7 +2209,11 @@ arg_types(erlang, is_bitstring, 1) ->
   [t_any()];
 arg_types(erlang, is_boolean, 1) ->
   [t_any()];
+arg_types(erlang, is_domain, 1) ->
+  [t_any()];
 arg_types(erlang, is_float, 1) ->
+  [t_any()];
+arg_types(erlang, is_forward, 1) ->
   [t_any()];
 arg_types(erlang, is_function, 1) ->
   [t_any()];
@@ -2521,7 +2531,9 @@ structure_inspecting_args(erlang, is_atom, 1) -> [1];
 structure_inspecting_args(erlang, is_boolean, 1) -> [1];
 structure_inspecting_args(erlang, is_binary, 1) -> [1];
 structure_inspecting_args(erlang, is_bitstring, 1) -> [1];
+structure_inspecting_args(erlang, is_domain, 1) -> [1];
 structure_inspecting_args(erlang, is_float, 1) -> [1];
+structure_inspecting_args(erlang, is_forward, 1) -> [1];
 structure_inspecting_args(erlang, is_function, 1) -> [1];
 structure_inspecting_args(erlang, is_integer, 1) -> [1];
 structure_inspecting_args(erlang, is_list, 1) -> [1];

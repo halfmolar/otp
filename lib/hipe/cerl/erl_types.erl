@@ -134,6 +134,7 @@
 	 t_is_pid/1,
 	 t_is_port/1,
 	 t_is_maybe_improper_list/1,
+	 t_is_domain/1,
 	 t_is_reference/1,
 	 t_is_remote/1,
 	 t_is_string/1,
@@ -176,6 +177,7 @@
 	 %% t_maybe_improper_list/2,
 	 t_product/1,
 	 t_reference/0,
+	 t_domain/0,
 	 t_remote/3,
 	 t_string/0,
 	 t_struct_from_opaque/2,
@@ -282,10 +284,11 @@
 -define(pid_qual,       pid).
 -define(port_qual,      port).
 -define(reference_qual, reference).
+-define(domain_qual,    domain).
 -define(unknown_qual,   unknown).
 
 -type qual() :: ?float_qual | ?integer_qual | ?nonempty_qual | ?pid_qual
-              | ?port_qual | ?reference_qual | ?unknown_qual | {_, _}.
+              | ?port_qual | ?reference_qual | ?domain_qual | ?unknown_qual | {_, _}.
 
 %%-----------------------------------------------------------------------------
 %% The type representation
@@ -1121,6 +1124,19 @@ t_is_reference(?identifier(?any)) -> false;
 t_is_reference(?identifier(Set)) -> set_is_singleton(?reference_qual, Set);
 t_is_reference(_) -> false.
 
+%%------------------------------------
+
+-spec t_domain() -> erl_type().
+
+t_domain() ->
+  ?identifier(set_singleton(?domain_qual)).
+
+-spec t_is_domain(erl_type()) -> boolean().
+
+t_is_domain(?identifier(?any)) -> false;
+t_is_domain(?identifier(Set)) -> set_is_singleton(?domain_qual, Set);
+t_is_domain(_) -> false.
+
 %%-----------------------------------------------------------------------------
 %% Numbers are divided into floats, integers, chars and bytes.
 %%
@@ -1733,7 +1749,9 @@ t_from_term(T) when is_pid(T) ->       t_pid();
 t_from_term(T) when is_port(T) ->      t_port();
 t_from_term(T) when is_reference(T) -> t_reference();
 t_from_term(T) when is_tuple(T) ->
-  t_tuple([t_from_term(E) || E <- tuple_to_list(T)]).
+  t_tuple([t_from_term(E) || E <- tuple_to_list(T)]);
+t_from_term(T) ->     t_domain().
+
 
 %%-----------------------------------------------------------------------------
 %% Integer types from a range.
@@ -3651,6 +3669,9 @@ t_from_form({type, _L, record, [Name|Fields]}, TypeNames, InOpaque, RecDict,
 t_from_form({type, _L, reference, []}, _TypeNames, _InOpaque, _RecDict,
             _VarDict) ->
   {t_reference(), []};
+t_from_form({type, _L, domain, []}, _TypeNames, _InOpaque, _RecDict,
+            _VarDict) ->
+  {t_domain(), []};
 t_from_form({type, _L, set, []}, _TypeNames, _InOpaque, _RecDict,
             _VarDict) ->
   {t_set(), []};

@@ -7593,6 +7593,7 @@ erl_create_process(Process* parent, /* Parent of process (default group leader).
     p->heap_sz = sz;
     p->catches = 0;
     p->extra_root = NULL;
+    p->domain = parent->domain;
 
     p->bin_vheap_sz     = p->min_vheap_size;
     p->bin_old_vheap_sz = p->min_vheap_size;

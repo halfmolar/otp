@@ -37,7 +37,7 @@
 -import(erl_types, [t_any/0, t_atom/0, t_atom_vals/1, t_binary/0,
 		    t_cons/2, t_cons_hd/1, t_cons_tl/1, t_float/0,
 		    t_fun/0, t_fun/2, t_from_range/2, t_from_term/1,
-		    t_inf/2, t_integer/0,
+		    t_inf/2, t_integer/0, t_domain/0,
 		    t_is_any/1, t_is_atom/1, t_is_cons/1, t_is_list/1,
 		    t_is_maybe_improper_list/1, t_is_none/1, t_is_tuple/1,
 		    t_limit/2, t_list_elements/1, t_maybe_improper_list/0,
@@ -898,6 +898,8 @@ guard_filters(T, Env, Vars) ->
 			    filter(As, t_atom(), Env);
 			{erlang, is_binary, 1} ->
 			    filter(As, t_binary(), Env);
+			{erlang, is_domain, 1} ->
+			    filter(As, t_domain(), Env);
 			{erlang, is_float, 1} ->
 			    filter(As, t_float(), Env);
 			{erlang, is_function, 1} ->

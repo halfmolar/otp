@@ -97,6 +97,10 @@ unsigned tag_val_def(Wterm x)
 		switch ((x & _TAG_IMMED2_MASK) >> _TAG_IMMED1_SIZE) {
 		  case (_TAG_IMMED2_ATOM >> _TAG_IMMED1_SIZE):	return ATOM_DEF;
 		  case (_TAG_IMMED2_NIL >> _TAG_IMMED1_SIZE):	return NIL_DEF;
+		  case (_TAG_IMMED2_IMMED3 >> _TAG_IMMED1_SIZE):
+		    switch ((x & _TAG_IMMED3_MASK) >> _TAG_IMMED2_SIZE) {
+		      case (_TAG_IMMED3_DOMAIN >> _TAG_IMMED2_SIZE): return DOMAIN_DEF;
+		    }
 		}
 		break;
 	    }

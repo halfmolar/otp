@@ -369,6 +369,15 @@ print_term(fmtfn_t fn, void* arg, Eterm obj, long *dcount,
 	    }
 	    PRINT_CHAR(res, fn, arg, '>');
 	    break;
+	case DOMAIN_DEF:
+	  PRINT_STRING(res, fn, arg, "#Dom<");
+	  PRINT_UWORD(res, fn, arg, 'u', 0, 1,
+		      (ErlPfUWord) domain_val(wobj));
+	  PRINT_CHAR(res, fn, arg, '.');
+	  PRINT_UWORD(res, fn, arg, 'u', 0, 1,
+		      (ErlPfUWord) domain_fwd(wobj));
+	  PRINT_CHAR(res, fn, arg, '>');
+	  break;
 	case PID_DEF:
 	case EXTERNAL_PID_DEF:
 	    PRINT_CHAR(res, fn, arg, '<');

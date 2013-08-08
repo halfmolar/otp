@@ -456,6 +456,10 @@ trans_fun([{test,is_ne_exact,{f,Lbl},[Arg1,Arg2]}|Instructions], Env) ->
 trans_fun([{test,is_integer,{f,Lbl},[Arg]}|Instructions], Env) ->
   {Code,Env1} = trans_type_test(integer,Lbl,Arg,Env),
   [Code | trans_fun(Instructions,Env1)];
+%%--- is_domain ---
+trans_fun([{test,is_domain,{f,Lbl},[Arg]}|Instructions], Env) ->
+  {Code,Env1} = trans_type_test(domain,Lbl,Arg,Env),
+  [Code | trans_fun(Instructions,Env1)];
 %%--- is_float ---
 trans_fun([{test,is_float,{f,Lbl},[Arg]}|Instructions], Env) ->
   {Code,Env1} = trans_type_test(float,Lbl,Arg,Env),

@@ -757,7 +757,13 @@ resolve_inst({is_ne_exact=I,Args0},_,_,_) ->
 resolve_inst({is_integer=I,Args0},_,_,_) ->
     [L|Args] = resolve_args(Args0),
     {test,I,L,Args};
+resolve_inst({is_domain=I,Args0},_,_,_) ->
+    [L|Args] = resolve_args(Args0),
+    {test,I,L,Args};
 resolve_inst({is_float=I,Args0},_,_,_) ->
+    [L|Args] = resolve_args(Args0),
+    {test,I,L,Args};
+resolve_inst({is_forward=I,Args0},_,_,_) ->
     [L|Args] = resolve_args(Args0),
     {test,I,L,Args};
 resolve_inst({is_number=I,Args0},_,_,_) ->

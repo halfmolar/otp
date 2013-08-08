@@ -60,7 +60,9 @@
 -define(PRIMOP_IS_BIGNUM, 'is_bignum').		% arity 1
 -define(PRIMOP_IS_BINARY, 'is_binary').		% arity 1
 -define(PRIMOP_IS_FIXNUM, 'is_fixnum').		% arity 1
+-define(PRIMOP_IS_DOMAIN, 'is_domain').		% arity 1
 -define(PRIMOP_IS_FLOAT, 'is_float').		% arity 1
+-define(PRIMOP_IS_FORWARD, 'is_forward').	% arity 1
 -define(PRIMOP_IS_FUNCTION, 'is_function').	% arity 1
 -define(PRIMOP_IS_INTEGER, 'is_integer').	% arity 1
 -define(PRIMOP_IS_LIST, 'is_list').		% arity 1

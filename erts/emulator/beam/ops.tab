@@ -717,6 +717,22 @@ is_reference f x
 is_reference f y
 %hot
 
+is_domain Fail=f cq => jump Fail
+%macro: is_domain IsDomain -fail_action
+is_domain f r
+is_domain f x
+%cold
+is_domain f y
+%hot
+
+is_forward Fail=f cq => jump Fail
+%macro: is_forward IsForward -fail_action
+is_forward f r
+is_forward f x
+%cold
+is_forward f y
+%hot
+
 is_pid Fail=f cq => jump Fail
 %macro: is_pid IsPid -fail_action
 is_pid f r

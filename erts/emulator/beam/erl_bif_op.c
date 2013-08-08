@@ -190,6 +190,22 @@ BIF_RETTYPE is_reference_1(BIF_ALIST_1)
     BIF_RET(am_false);
 }
 
+BIF_RETTYPE is_domain_1(BIF_ALIST_1)
+{
+    if (is_domain(BIF_ARG_1)) {
+	BIF_RET(am_true);
+    }
+    BIF_RET(am_false);
+}
+
+BIF_RETTYPE is_forward_1(BIF_ALIST_1)
+{
+    if (is_domain(BIF_ARG_1) && domain_fwd(BIF_ARG_1)) {
+	BIF_RET(am_true);
+    }
+    BIF_RET(am_false);
+}
+
 BIF_RETTYPE is_tuple_1(BIF_ALIST_1)
 {
     if (is_tuple(BIF_ARG_1)) {

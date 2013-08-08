@@ -85,14 +85,14 @@
 		    t_inf/2, t_inf_lists/2, t_integer/0,
 		    t_integer/1, t_is_atom/1, t_is_any/1,
 		    t_is_binary/1, t_is_bitstr/1, t_is_bitwidth/1, t_is_boolean/1,
-		    t_is_fixnum/1, t_is_cons/1,
+		    t_is_fixnum/1, t_is_cons/1, t_is_domain/1,
 		    t_is_maybe_improper_list/1, t_is_equal/2, t_is_float/1,
 		    t_is_fun/1, t_is_integer/1, t_is_non_neg_integer/1, 
 		    t_is_number/1, t_is_matchstate/1,
 		    t_is_nil/1, t_is_none/1, t_is_port/1, t_is_pid/1,
 		    t_is_reference/1, t_is_subtype/2, t_is_tuple/1,
 		    t_limit/2, t_matchstate_present/1, t_matchstate/0, 
-		    t_matchstate_slots/1, t_maybe_improper_list/0,
+		    t_matchstate_slots/1, t_maybe_improper_list/0, t_domain/0,
 		    t_nil/0, t_none/0, t_number/0, t_number/1, t_number_vals/1,
 		    t_pid/0, t_port/0, t_reference/0, t_subtract/2, t_sup/2,
 		    t_to_tlist/1, t_tuple/0, t_tuple/1, t_tuple_sizes/1]).
@@ -889,6 +889,8 @@ test_type0(bitstr, T) ->
   t_is_bitstr(T);
 test_type0(reference, T) ->
   t_is_reference(T);
+test_type0(domain, T) ->
+  t_is_domain(T);
 test_type0(function, T) ->
   t_is_fun(T);
 test_type0(boolean, T) ->
@@ -929,6 +931,8 @@ true_branch_info(bitstr) ->
   t_bitstr();
 true_branch_info(reference) ->
   t_reference();
+true_branch_info(domain) ->
+  t_domain();
 true_branch_info(function) ->
   t_fun();
 true_branch_info(cons) ->
